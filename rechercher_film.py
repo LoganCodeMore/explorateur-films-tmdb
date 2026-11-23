@@ -1,4 +1,5 @@
 import os
+import webbrowser
 
 import requests
 from dotenv import load_dotenv
@@ -109,6 +110,19 @@ def rechercher_films(titre_recherche, jeton):
         return resultats
 
 
+def ouvrir_affiche_film(film_selectionne):
+
+    chemin_affiche = film_selectionne.get("poster_path")
+
+    if chemin_affiche is None:
+        print("Aucune affiche disponible pour ce film.")
+
+    else:
+        url_affiche = f"https://image.tmdb.org/t/p/w500{chemin_affiche}"
+
+        webbrowser.open(url_affiche)
+
+
 load_dotenv()
 
 jeton = os.getenv("TMDB_TOKEN")
@@ -137,7 +151,4 @@ else:
 
             afficher_details_film_selectionne(film_selectionne)
 
-
-
-
-
+            ouvrir_affiche_film(film_selectionne)
