@@ -123,15 +123,10 @@ def ouvrir_affiche_film(film_selectionne):
         webbrowser.open(url_affiche)
 
 
-load_dotenv()
+def effectuer_recherche_complete(jeton):
 
-jeton = os.getenv("TMDB_TOKEN")
-
-if not jeton:
-    print("Le jeton TMDB est introuvable. Vérifiez le fichier .env.")
-else:
     titre_recherche = demander_titre("Quel film recherchez-vous ? ")
-
+    
     resultats = rechercher_films(titre_recherche, jeton)
 
     if resultats is None:
@@ -152,3 +147,38 @@ else:
             afficher_details_film_selectionne(film_selectionne)
 
             ouvrir_affiche_film(film_selectionne)
+
+
+def afficher_menu():
+
+    print("=== RECHERCHE DE FILMS TMDB ===")
+    print()
+    print("1 - Rechercher un film")
+    print("0 - Quitter")
+    print()
+
+
+
+load_dotenv()
+
+jeton = os.getenv("TMDB_TOKEN")
+
+if not jeton:
+    print("Le jeton TMDB est introuvable. Vérifiez le fichier .env.")
+else:
+    while True:
+
+        afficher_menu()
+
+        choix = input("Entrez une commande du menu : ")
+        print()
+
+        if choix == "1":
+            effectuer_recherche_complete(jeton)
+        elif choix == "0":
+            print("Au revoir.")
+            break
+        else:
+            print("Commande invalide.")
+
+        print()
