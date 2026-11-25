@@ -1,6 +1,6 @@
 import webbrowser
 
-from api_tmdb import rechercher_films
+from api_tmdb import rechercher_films, recuperer_details_film
 from utilitaires import demander_titre
 from affichage import (
     afficher_liste_courte_films,
@@ -27,9 +27,9 @@ def selectionner_film(resultats_affiches):
         return None
 
 
-def ouvrir_affiche_film(film_selectionne):
+def ouvrir_affiche_film(details_film):
 
-    chemin_affiche = film_selectionne.get("poster_path")
+    chemin_affiche = details_film.get("poster_path")
 
     if chemin_affiche is None:
         print("Aucune affiche disponible pour ce film.")
@@ -61,6 +61,12 @@ def effectuer_recherche_complete(jeton):
 
         if film_selectionne is not None:
 
-            afficher_details_film_selectionne(film_selectionne)
+            id_film = film_selectionne['id']
 
-            ouvrir_affiche_film(film_selectionne)
+            details_film = recuperer_details_film(id_film, jeton)
+
+            if details_film is not None:
+
+                afficher_details_film_selectionne(details_film)
+
+                ouvrir_affiche_film(details_film)
