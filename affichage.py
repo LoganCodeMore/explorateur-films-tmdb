@@ -25,9 +25,7 @@ def afficher_details_film_selectionne(details_film):
 
     genres_formates = ", ".join(noms_genres)
 
-    duree = details_film['runtime']
-    heures = duree // 60
-    minutes = duree % 60
+    duree_formatee = formater_duree(details_film['runtime'])
 
     print("=== INFORMATIONS DU FILM ===")
     print()
@@ -36,6 +34,16 @@ def afficher_details_film_selectionne(details_film):
     print(f"Titre original : {details_film['original_title']}")
     print(f"Genres : {genres_formates}")
     print(f"Date de sortie : {date_sortie}")
-    print(f"Durée : {heures} h {minutes} min")
+    print(f"Durée : {duree_formatee}")
     print(f"Note moyenne : {details_film['vote_average']}/10")
     print(f"Résumé : {resume}")
+
+
+def formater_duree(duree):
+
+    heures = duree // 60
+    minutes = duree % 60
+
+    duree_formatee = f"{heures} h {minutes} min"
+
+    return duree_formatee
